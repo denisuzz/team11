@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Team Recruitment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            margin: 0;
+            padding: 0;
+            color: #c9d1d9;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('https://pictures.ua.tribuna.com/image/3549cf13-3928-4b16-98ad-c54424ab0252?width=1260&quality=70') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            font-weight: bold;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: -100px auto 50px;
+            background: #161b22;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #58a6ff;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+        }
+
+        input, textarea {
+            background: #21262d;
+            color: #c9d1d9;
+        }
+
+        button {
+            background-color: #238636;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 50px auto;
+            max-width: 85%;
+        }
+
+        .gallery img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .intro {
+            text-align: center;
+            margin: 50px auto;
+            max-width: 700px;
+            font-size: 1.3em;
+            color: #9dccc9;
+        }
+
+        .intro strong {
+            color: #58a6ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Отправь свою заявку прямо сейчас</h1>
+        <p>.</p>
+    </div>
+
+    <div class="intro">
+        <p> <strong></strong> </p>
+    </div>
+
+    <div class="form-container">
+        <h2>Анкета</h2>
+        <form id="applicationForm">
+            <label for="eloPremier">Elo в Премьере:</label>
+            <input type="number" id="eloPremier" name="eloPremier" required placeholder="Введите ваше Elo в Премьере">
+
+            <label for="eloFaceit">Elo в Faceit:</label>
+            <input type="number" id="eloFaceit" name="eloFaceit" required placeholder="Введите ваше Elo в Faceit">
+
+            <label for="hours">Количество часов в CS2:</label>
+            <input type="number" id="hours" name="hours" required placeholder="Введите количество часов">
+
+            <label for="steamProfile">Ссылка на профиль Steam:</label>
+            <input type="url" id="steamProfile" name="steamProfile" required placeholder="https://steamcommunity.com/profiles/...">
+
+            <label for="discord">Ссылка на профиль Discord:</label>
+            <input type="url" id="discordProfile" name="discordProfile" required placeholder="@qwerty">
+            <button type="button" onclick="sendApplication()">Отправить заявку</button>
+        </form>
+    </div>
+
+
+    <div class="footer">
+        Designed for CS2 recruitment by BigPencil. All Rights Reserved.
+    </div>
+
+    <script>
+        async function sendApplication() {
+            const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL_HERE"; // Вставь сюда свой Webhook URL
+
+            const eloPremier = document.getElementById('eloPremier').value;
+            const eloFaceit = document.getElementById('eloFaceit').value;
+            const hours = document.getElementById('hours').value;
+            const steamProfile = document.getElementById('steamProfile').value;
+            const discord = document.getElementById('steamProfile').value;
+
+            const data = {
+                content: `Новая заявка на набор в команду CS2:\nElo в Премьере: ${eloPremier}\nElo в Faceit: ${eloFaceit}\nЧасы в игре: ${hours}\nПрофиль Steam: ${steamProfile}`
+            };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert('Заявка успешно отправлена!');
+                    document.getElementById('applicationForm').reset();
+                } else {
+                    alert('Ошибка при отправке заявки. Проверьте настройки.');
+                }
+            } catch (error) {
+                alert('Произошла ошибка: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
